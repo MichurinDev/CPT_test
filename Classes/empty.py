@@ -8,7 +8,8 @@ class EmptyObj:
     async def set_coords(self, x, y, others) -> None:
         self.x = x
         self.y = y
-        self.check_distance(others)
+        dist_to_other_obj = await self.check_distance(others)
+        return dist_to_other_obj
 
     async def get_coords(self) -> tuple:
         return (self.x, self.y)
@@ -20,5 +21,4 @@ class EmptyObj:
         if not others:
             return None
 
-        for other in others:
-            return (other, await self.get_distance(other) <= self.min_permis_dist)
+        return [(f"{other.name} in {self.name}", await self.get_distance(other) <= self.min_permis_dist) for other in others]
